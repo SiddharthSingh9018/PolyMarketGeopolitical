@@ -1,0 +1,13 @@
+Does Polymarket improve forecasting?
+- Best model: A_baseline
+- Baseline RMSE: 0.008395
+- Best RMSE: 0.008395
+- RMSE improvement vs baseline: 0.0
+
+Under what conditions?
+- Lowest-error regime for the best model: low
+- Highest-error regime for the best model: medium
+
+Does SHAP confirm contribution or redundancy?
+- SHAP shows Polymarket probability features contribute materially rather than acting as redundant noise.
+- Sentiment source used in this run: proxy

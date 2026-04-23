@@ -1,0 +1,9 @@
+Do Polymarket features improve prediction? YES
+- Best model: A_base_macro with linear
+- Best RMSE: 0.024193
+- Best C_full RMSE: 0.024369
+- Matching A_base_macro RMSE: 0.024648
+- Matching B_base_macro_sentiment RMSE: 0.024492
+- Is the single best overall model Polymarket-augmented? NO
+- Top Polymarket SHAP features: num__poly_probability_change_lag_1, num__poly_probability_level_lag_1, num__poly_order_imbalance_lag_1
+- Diebold-Mariano supports C_full against both simpler specifications.

@@ -1,0 +1,25 @@
+label_type,estimator,comparison,metric,diff_right_minus_left,ci_low,ci_high,significant
+spike_roll,lightgbm,A_base_macro vs C_full,f1,0.0,0.0,0.0,False
+spike_roll,lightgbm,A_base_macro vs C_full,roc_auc,0.020031249999999945,0.004518020609059862,0.03374927888571546,True
+spike_roll,lightgbm,B_base_macro_sentiment vs C_full,f1,0.0,0.0,0.0,False
+spike_roll,lightgbm,B_base_macro_sentiment vs C_full,roc_auc,0.0,0.0,0.0,False
+spike_roll,logistic,A_base_macro vs C_full,f1,-0.06093276801938219,-0.1030108385761277,-0.018732181878379876,True
+spike_roll,logistic,A_base_macro vs C_full,roc_auc,-0.07762499999999994,-0.09753054884742245,-0.05972875895412766,True
+spike_roll,logistic,B_base_macro_sentiment vs C_full,f1,0.0,0.0,0.0,False
+spike_roll,logistic,B_base_macro_sentiment vs C_full,roc_auc,0.0,0.0,0.0,False
+spike_roll,random_forest,A_base_macro vs C_full,f1,0.0,0.0,0.0,False
+spike_roll,random_forest,A_base_macro vs C_full,roc_auc,0.04546875000000006,0.0197110095298454,0.07077804756809208,True
+spike_roll,random_forest,B_base_macro_sentiment vs C_full,f1,0.0,0.0,0.0,False
+spike_roll,random_forest,B_base_macro_sentiment vs C_full,roc_auc,0.01871875000000006,0.0003087944441387972,0.038694313603624554,True
+spike_top10,lightgbm,A_base_macro vs C_full,f1,0.007071714807504126,0.001337007541016255,0.014731850526158288,True
+spike_top10,lightgbm,A_base_macro vs C_full,roc_auc,-0.027935519325884006,-0.041863959306784965,-0.011817651986506073,True
+spike_top10,lightgbm,B_base_macro_sentiment vs C_full,f1,0.0,0.0,0.0,False
+spike_top10,lightgbm,B_base_macro_sentiment vs C_full,roc_auc,0.0,0.0,0.0,False
+spike_top10,logistic,A_base_macro vs C_full,f1,0.006754514859932725,-0.01634777706479426,0.026312604021349655,False
+spike_top10,logistic,A_base_macro vs C_full,roc_auc,0.038411339073090356,0.01642673351842904,0.058825812499498704,True
+spike_top10,logistic,B_base_macro_sentiment vs C_full,f1,0.0,0.0,0.0,False
+spike_top10,logistic,B_base_macro_sentiment vs C_full,roc_auc,0.0,0.0,0.0,False
+spike_top10,random_forest,A_base_macro vs C_full,f1,0.004946674408861318,-0.0009318745708701496,0.011916845336750255,False
+spike_top10,random_forest,A_base_macro vs C_full,roc_auc,-0.0368371038651768,-0.059039863890437215,-0.018668117383170722,True
+spike_top10,random_forest,B_base_macro_sentiment vs C_full,f1,0.0036368958325709855,-0.001478626519921103,0.008898381031114476,False
+spike_top10,random_forest,B_base_macro_sentiment vs C_full,roc_auc,0.004310542223850522,-0.003174628643841373,0.011372727955054573,False

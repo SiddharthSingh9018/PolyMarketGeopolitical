@@ -1,0 +1,10 @@
+{
+  "dataset_path": "research_data\\processed\\model_dataset.csv",
+  "anomaly_window": 60,
+  "spike_quantile": 0.9,
+  "bootstrap_iterations": 400,
+  "min_train_periods": 252,
+  "test_periods": 21,
+  "step_periods": 21,
+  "max_splits": 6
+}

@@ -15,6 +15,17 @@ dependencies = [
     "requests>=2.31.0",
     "gql[requests]>=3.4.0",
     "flatten-json>=0.1.13",
+    "scikit-learn>=1.3.2",
+    "xgboost>=2.1.4",
+    "shap>=0.44.1",
+    "yfinance>=1.2.0",
+    "pandas-datareader>=0.10.0",
+    "matplotlib>=3.7.5",
+    "seaborn>=0.13.2",
+    "scipy>=1.10.1",
+    "openpyxl>=3.1.5",
+    "xlrd>=2.0.2",
+    "lightgbm>=4.6.0",
 ]
 
 [project.optional-dependencies]
@@ -29,7 +40,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["poly_utils", "update_utils"]
+packages = ["poly_utils", "update_utils", "research_pipeline"]
 
 [tool.uv]
 dev-dependencies = []

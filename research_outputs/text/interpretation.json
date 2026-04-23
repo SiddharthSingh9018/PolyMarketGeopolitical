@@ -1,0 +1,13 @@
+{
+  "does_polymarket_improve_forecasting": false,
+  "best_model": "A_baseline",
+  "baseline_rmse": 0.008395,
+  "best_rmse": 0.008395,
+  "rmse_improvement_vs_baseline": 0.0,
+  "regime_summary": {
+    "best_regime": "low",
+    "worst_regime": "medium"
+  },
+  "sentiment_source": "proxy",
+  "shap_conclusion": "SHAP shows Polymarket probability features contribute materially rather than acting as redundant noise."
+}

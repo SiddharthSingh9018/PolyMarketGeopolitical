@@ -1,0 +1,8 @@
+Q1: Does Polymarket improve spike prediction? NO
+Q2: Is improvement statistically significant? NO
+Q3: In which regimes does it help? high_vix
+- Label definition used for summary: spike_top10
+- Best overall spike model: A_base_macro with logistic
+- Best F1: 0.655090
+- Best C_full F1: 0.642701
+- Top Polymarket SHAP features: num__poly_volume_zscore_lag_1, num__poly_trade_count_lag_1, num__poly_order_imbalance_lag_1

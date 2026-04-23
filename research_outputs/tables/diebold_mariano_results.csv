@@ -1,0 +1,7 @@
+estimator,comparison,dm_stat,p_value
+linear,A_base_macro vs C_full,-0.6101755986531072,0.5417454920928348
+linear,B_base_macro_sentiment vs C_full,-2.8370982303069012,0.004552560321597232
+random_forest,A_base_macro vs C_full,5.070837481170038,3.960688939042001e-07
+random_forest,B_base_macro_sentiment vs C_full,2.201817261573179,0.027678219261754622
+xgboost,A_base_macro vs C_full,1.9898939469000827,0.04660261930994025
+xgboost,B_base_macro_sentiment vs C_full,0.19729976907825744,0.8435929600428975

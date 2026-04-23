@@ -1,0 +1,7 @@
+{
+  "dataset_path": "research_data\\processed\\model_dataset.csv",
+  "min_train_periods": 252,
+  "test_periods": 21,
+  "step_periods": 21,
+  "max_splits": 6
+}

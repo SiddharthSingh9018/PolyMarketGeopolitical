@@ -1,0 +1,16 @@
+{
+  "frequency": "D",
+  "forecast_horizon": 5,
+  "realized_window": 5,
+  "selected_market_count": 1047,
+  "asset_tickers": [
+    "ITA",
+    "LMT",
+    "NOC",
+    "RTX",
+    "GD",
+    "LHX"
+  ],
+  "sentiment_source": "proxy",
+  "bootstrap_source": "local"
+}
