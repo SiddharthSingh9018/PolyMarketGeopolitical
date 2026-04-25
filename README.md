@@ -1,260 +1,351 @@
-# Polymarket Data
+# Polymarket Defense Volatility Research Pipeline
 
-A comprehensive data pipeline for fetching, processing, and analyzing Polymarket trading data. This system collects market information, order-filled events, and processes them into structured trade data.
+This repository combines:
 
-## Quick Download
+1. A Polymarket data ingestion stack.
+2. A research pipeline for testing whether decentralized prediction market signals improve short-horizon volatility forecasting and volatility spike detection in U.S. defense-related assets.
 
-**First-time users**: Download the [latest data snapshot](https://polydata-archive.s3.us-east-1.amazonaws.com/orderFilled_complete.csv.xz) (Credits to [@PendulumFlow](https://x.com/PendulumFlow) for fixing some missing points in the data and sending it over) and extract it in the main repository directory before your first run [(backup if this doesn't work)](https://polydata-archive.s3.us-east-1.amazonaws.com/archive.tar.xz). This will save you over 2 days of initial data collection time.
+The project is currently structured as a research-grade workflow rather than only a data-collection repo.
 
-## Overview
+## Research Question
 
-This pipeline performs three main operations:
+The core question is:
 
-1. **Market Data Collection** - Fetches all Polymarket markets with metadata
-2. **Order Event Scraping** - Collects order-filled events from Goldsky subgraph
-3. **Trade Processing** - Transforms raw order events into structured trade data
+> Do decentralized prediction market probabilities from Polymarket improve short-horizon volatility forecasting and volatility spike prediction for defense assets beyond traditional benchmark variables?
+
+The working conclusion in the current saved outputs is:
+
+- not robustly for broad daily forecasting
+- possibly in narrower, regime-sensitive, or event-driven settings
+
+## Intended Research Positioning
+
+The framing is suitable for empirical work aimed at outlets such as:
+
+- *Journal of Prediction Markets*
+- *Management Science*
+- *American Political Science Review*
+- *Journal of International Money and Finance*
+- *Journal of Futures Markets*
+- *Finance Research Letters*
+
+The current evidence is most naturally aligned with:
+
+- *Journal of Prediction Markets*
+- *Journal of Futures Markets*
+- *Finance Research Letters*
+
+because the result is nuanced, conditional, and event-sensitive rather than a universal forecasting breakthrough.
+
+## Repository Layers
+
+### 1. Data ingestion
+The original repo components collect:
+
+- market metadata from the Polymarket API
+- order-filled events from Goldsky
+- processed trade records with price and side information
+
+### 2. Research pipeline
+The added research stack runs:
+
+- volatility forecasting regression
+- volatility spike classification
+- feature-set ablation
+- regime analysis
+- event studies
+- statistical testing
+- SHAP analysis
+- plot and report generation
+
+## Repository Layout
+
+```text
+poly_data/
+├── update_all.py
+├── update_utils/
+├── poly_utils/
+├── research_pipeline/
+│   ├── config.py
+│   ├── data.py
+│   ├── data_loading.py
+│   ├── feature_engineering.py
+│   ├── models.py
+│   ├── evaluation.py
+│   ├── pipeline.py
+│   ├── pipeline_v2.py
+│   ├── spike_feature_engineering.py
+│   ├── spike_models.py
+│   ├── spike_evaluation.py
+│   ├── spike_pipeline.py
+│   └── plot_extras.py
+├── run_research_pipeline.py
+├── run_spike_pipeline.py
+├── generate_extra_plots.py
+├── research_data/
+└── research_outputs/
+```
 
 ## Installation
 
-This project uses [UV](https://docs.astral.sh/uv/) for fast, reliable package management.
-
-### Install UV
+This project uses [UV](https://docs.astral.sh/uv/).
 
 ```bash
-# macOS/Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Windows
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-# Or with pip
-pip install uv
+uv sync
 ```
 
-### Install Dependencies
+Optional notebook extras:
 
 ```bash
-# Install all dependencies
-uv sync
-
-# Install with development dependencies (Jupyter, etc.)
 uv sync --extra dev
 ```
 
-## Quick Start
+## Ingestion Workflow
+
+To update the raw Polymarket data:
 
 ```bash
-# Run with UV (recommended)
 uv run python update_all.py
-
-# Or activate the virtual environment first
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-python update_all.py
 ```
 
-This will sequentially run all three pipeline stages:
-- Update markets from Polymarket API
-- Update order-filled events from Goldsky
-- Process new orders into trades
+This runs:
 
-## Project Structure
+- `update_markets()`
+- `update_goldsky()`
+- `process_live()`
 
-```
-poly_data/
-├── update_all.py              # Main orchestrator script
-├── update_utils/              # Data collection modules
-│   ├── update_markets.py      # Fetch markets from Polymarket API
-│   ├── update_goldsky.py      # Scrape order events from Goldsky
-│   └── process_live.py        # Process orders into trades
-├── poly_utils/                # Utility functions
-│   └── utils.py               # Market loading and missing token handling
-├── markets.csv                # Main markets dataset
-├── missing_markets.csv        # Markets discovered from trades (auto-generated)
-├── goldsky/                   # Order-filled events (auto-generated)
-│   └── orderFilled.csv
-└── processed/                 # Processed trade data (auto-generated)
-    └── trades.csv
-```
+## Research Workflows
 
-## Data Files
+## 1. Regression pipeline
 
-### markets.csv
-Market metadata including:
-- Market question, outcomes, and tokens
-- Creation/close times and slugs
-- Trading volume and condition IDs
-- Negative risk indicators
-
-**Fields**: `createdAt`, `id`, `question`, `answer1`, `answer2`, `neg_risk`, `market_slug`, `token1`, `token2`, `condition_id`, `volume`, `ticker`, `closedTime`
-
-### goldsky/orderFilled.csv
-Raw order-filled events with:
-- Maker/taker addresses and asset IDs
-- Fill amounts and transaction hashes
-- Unix timestamps
-
-**Fields**: `timestamp`, `maker`, `makerAssetId`, `makerAmountFilled`, `taker`, `takerAssetId`, `takerAmountFilled`, `transactionHash`
-
-### processed/trades.csv
-Structured trade data including:
-- Market ID mapping and trade direction
-- Price, USD amount, and token amount
-- Maker/taker roles and transaction details
-
-**Fields**: `timestamp`, `market_id`, `maker`, `taker`, `nonusdc_side`, `maker_direction`, `taker_direction`, `price`, `usd_amount`, `token_amount`, `transactionHash`
-
-## Pipeline Stages
-
-### 1. Update Markets (`update_markets.py`)
-
-Fetches all markets from Polymarket API in chronological order.
-
-**Features**:
-- Automatic resume from last offset (idempotent)
-- Rate limiting and error handling
-- Batch fetching (500 markets per request)
-
-**Usage**:
 ```bash
-uv run python -c "from update_utils.update_markets import update_markets; update_markets()"
+uv run python run_research_pipeline.py
 ```
 
-### 2. Update Goldsky (`update_goldsky.py`)
+This runs:
 
-Scrapes order-filled events from Goldsky subgraph API.
+- rolling time-series regression
+- benchmark vs sentiment vs Polymarket feature-set comparison
+- Diebold-Mariano testing
+- SHAP explainability
 
-**Features**:
-- Resumes from last timestamp automatically
-- Handles GraphQL queries with pagination
-- Deduplicates events
+## 2. Spike-classification pipeline
 
-**Usage**:
 ```bash
-uv run python -c "from update_utils.update_goldsky import update_goldsky; update_goldsky()"
+uv run python run_spike_pipeline.py
 ```
 
-### 3. Process Live Trades (`process_live.py`)
+This runs:
 
-Processes raw order events into structured trades.
+- `spike_roll` classification
+- `spike_top10` classification
+- precision / recall / F1 / ROC-AUC evaluation
+- bootstrap confidence intervals
+- McNemar tests
+- tolerant `±1 day` timing evaluation
+- regime comparison
+- SHAP explainability
 
-**Features**:
-- Maps asset IDs to markets using token lookup
-- Calculates prices and trade directions
-- Identifies BUY/SELL sides
-- Handles missing markets by discovering them from trades
-- Incremental processing from last checkpoint
+## 3. Extra plots
 
-**Usage**:
 ```bash
-uv run python -c "from update_utils.process_live import process_live; process_live()"
+uv run python generate_extra_plots.py
 ```
 
-**Processing Logic**:
-- Identifies non-USDC asset in each trade
-- Maps to market and outcome token (token1/token2)
-- Determines maker/taker directions (BUY/SELL)
-- Calculates price as USDC amount per outcome token
-- Converts amounts from raw units (divides by 10^6)
+## Paper-Style Profile
 
-## Dependencies
+The code now includes a paper-style configuration helper:
 
-Dependencies are managed via `pyproject.toml` and installed automatically with `uv sync`.
+- `paper_2020_profile()`
 
-**Key Libraries**:
-- `polars` - Fast DataFrame operations
-- `pandas` - Data manipulation
-- `gql` - GraphQL client for Goldsky
-- `requests` - HTTP requests to Polymarket API
-- `flatten-json` - JSON flattening for nested responses
+This is designed to move the code closer to the study layout described in the paper draft:
 
-**Development Dependencies** (optional, installed with `--extra dev`):
-- `jupyter` - Interactive notebooks
-- `notebook` - Jupyter notebook interface
-- `ipykernel` - Python kernel for Jupyter
+- date range: `2020-01-02` to `2020-07-31`
+- assets:
+  - `RTX`
+  - `LMT`
+  - `NOC`
+- 60-day train window
+- 30-day held-out test window
 
-## Features
+This helper makes the code more paper-aligned, but the existing saved outputs in the repo were not all regenerated under that exact profile.
 
-### Resumable Operations
-All stages automatically resume from where they left off:
-- **Markets**: Counts existing CSV rows to set offset
-- **Goldsky**: Reads last timestamp from orderFilled.csv
-- **Processing**: Finds last processed transaction hash
+## Dataset
 
-### Error Handling
-- Automatic retries on network failures
-- Rate limit detection and backoff
-- Server error (500) handling
-- Graceful fallbacks for missing data
+The main research panel is:
 
-### Missing Market Discovery
-The processing stage automatically discovers markets that weren't in the initial markets.csv (e.g., markets created after last update) and fetches them via the Polymarket API, saving to `missing_markets.csv`.
+- [research_data/processed/model_dataset.csv](research_data/processed/model_dataset.csv)
 
-## Data Schema Details
+It is a `date × asset` panel containing:
 
-### Trade Direction Logic
-- **Taker Direction**: BUY if paying USDC, SELL if receiving USDC
-- **Maker Direction**: Opposite of taker direction
-- **Price**: Always expressed as USDC per outcome token
+- market features:
+  - `log_return`
+  - `realized_volatility`
+  - `target_forward_volatility`
+  - `volume_change`
+  - `range_pct`
+  - `close_to_open`
+- Polymarket features:
+  - `poly_probability_level`
+  - `poly_probability_change`
+  - `poly_probability_volatility`
+  - `poly_order_imbalance`
+  - `poly_trade_count`
+  - `poly_volume_zscore`
+  - `poly_daily_volume`
+  - `poly_market_count`
+  - `regime`
+- macro features:
+  - `vix`
+  - `oil_volatility_proxy`
+  - `wti_price`
+  - `gpr`
+  - optional Treasury-yield support in code
+- sentiment features:
+  - `sentiment`
+  - `sentiment_change`
+  - `sentiment_rolling_mean`
+- lagged controls:
+  - `*_lag_1`
+  - `*_lag_2`
+  - `*_lag_5`
 
-### Asset Mapping
-- `makerAssetId`/`takerAssetId` of "0" represents USDC
-- Non-zero IDs are outcome token IDs (token1/token2 from markets)
-- Each trade involves USDC and one outcome token
+## Methodology Summary
+
+### Regression task
+Target:
+
+- `target_forward_volatility`
+
+Feature sets:
+
+- `A_base_macro`
+- `B_base_macro_sentiment`
+- `C_full`
+
+Estimators:
+
+- Linear Regression
+- Random Forest
+- XGBoost
+
+Metrics:
+
+- RMSE
+- MAE
+- R²
+- directional accuracy
+
+Inference:
+
+- Diebold-Mariano tests
+
+### Spike task
+Labels:
+
+- `spike_roll`
+- `spike_top10`
+
+Additional event-sensitive Polymarket features:
+
+- `poly_shock`
+- `poly_jump`
+
+Estimators:
+
+- Logistic Regression
+- Random Forest
+- LightGBM
+
+Metrics:
+
+- precision
+- recall
+- F1
+- ROC-AUC
+- confusion counts
+- tolerant event scoring
+
+Inference:
+
+- bootstrap confidence intervals
+- McNemar tests
+
+## Key Outputs
+
+### Main writeups
+
+- [research_outputs/text/methodology_and_findings.md](research_outputs/text/methodology_and_findings.md)
+- [research_outputs/text/paper_vs_pipeline_comparison.md](research_outputs/text/paper_vs_pipeline_comparison.md)
+- [research_outputs/text/final_summary.txt](research_outputs/text/final_summary.txt)
+- [research_outputs/text/spike_final_summary.txt](research_outputs/text/spike_final_summary.txt)
+
+### Main tables
+
+- [research_outputs/tables/model_comparison.csv](research_outputs/tables/model_comparison.csv)
+- [research_outputs/tables/diebold_mariano_results.csv](research_outputs/tables/diebold_mariano_results.csv)
+- [research_outputs/tables/spike_model_comparison.csv](research_outputs/tables/spike_model_comparison.csv)
+- [research_outputs/tables/spike_bootstrap_results.csv](research_outputs/tables/spike_bootstrap_results.csv)
+- [research_outputs/tables/spike_mcnemar_results.csv](research_outputs/tables/spike_mcnemar_results.csv)
+- [research_outputs/tables/spike_regime_comparison.csv](research_outputs/tables/spike_regime_comparison.csv)
+- [research_outputs/tables/spike_shap_importance.csv](research_outputs/tables/spike_shap_importance.csv)
+
+### Plots
+
+- [research_outputs/plots](research_outputs/plots)
+
+Useful plot files include:
+
+- `spike_improvement_heatmaps.png`
+- `spike_bootstrap_forest.png`
+- `spike_regime_f1_bars.png`
+- `spike_shap_top15.png`
+- `spike_shap_poly_only.png`
+- `spike_event_study.png`
+- `shap_summary.png`
+- `spike_shap_summary.png`
+
+## Current Empirical Takeaway
+
+### Regression
+Polymarket features were informative but did not produce the single best overall continuous volatility forecast in the saved run.
+
+### Spike detection
+Polymarket features did not produce a broad, statistically robust overall improvement in spike prediction, although they appear more useful in higher-volatility or event-driven settings.
+
+### Best high-level interpretation
+Polymarket is best viewed as:
+
+- a supplementary event-risk indicator
+- a conditional regime signal
+- an early-warning overlay
+
+rather than as a universally dominant daily forecasting input.
 
 ## Notes
 
-- All amounts are normalized to standard decimal format (divided by 10^6)
-- Timestamps are converted from Unix epoch to datetime
-- Platform wallets (`0xc5d563a36ae78145c45a50134d48a1215220f80a`, `0x4bfb41d5b3570defd03c39a9a4d8de6bd8b8982e`) are tracked in `poly_utils/utils.py`
-- Negative risk markets are flagged in the market data
+- Raw download caches under `research_data/raw/` are ignored by Git.
+- Large source data are handled with lazy execution and split-wise materialization.
+- The repo now contains both ingestion logic and research outputs.
 
 ## Troubleshooting
 
-**Issue**: Markets not found during processing
-**Solution**: Run `update_markets()` first, or let `process_live()` auto-discover them
+### Missing research outputs
+Run:
 
-**Issue**: Duplicate trades
-**Solution**: Deduplication is automatic - re-run processing from scratch if needed
-
-**Issue**: Rate limiting
-**Solution**: The pipeline handles this automatically with exponential backoff
-
-## Analysis
-
-### Loading Data
-
-```python
-import pandas as pd
-import polars as pl
-from poly_utils import get_markets, PLATFORM_WALLETS
-
-# Load markets
-markets_df = get_markets()
-
-# Load trades
-df = pl.scan_csv("processed/trades.csv").collect(streaming=True)
-df = df.with_columns(
-    pl.col("timestamp").str.to_datetime().alias("timestamp")
-)
+```bash
+uv run python run_research_pipeline.py
+uv run python run_spike_pipeline.py
+uv run python generate_extra_plots.py
 ```
 
-### Filtering Trades by User
+### Missing raw Polymarket data
+Run:
 
-**Important**: When filtering for a specific user's trades, filter by the `maker` column. Even though it appears you're only getting trades where the user is the maker, this is how Polymarket generates events at the contract level. The `maker` column shows trades from that user's perspective including price.
-
-```python
-USERS = {
-    'domah': '0x9d84ce0306f8551e02efef1680475fc0f1dc1344',
-    '50pence': '0x3cf3e8d5427aed066a7a5926980600f6c3cf87b3',
-    'fhantom': '0x6356fb47642a028bc09df92023c35a21a0b41885',
-    'car': '0x7c3db723f1d4d8cb9c550095203b686cb11e5c6b',
-    'theo4': '0x56687bf447db6ffa42ffe2204a05edaa20f55839'
-}
-
-# Get all trades for a specific user
-trader_df = df.filter((pl.col("maker") == USERS['domah']))
+```bash
+uv run python update_all.py
 ```
 
 ## License
 
-Go wild with it
+Go wild with it.
