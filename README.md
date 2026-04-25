@@ -305,10 +305,66 @@ Useful plot files include:
 - `shap_summary.png`
 - `spike_shap_summary.png`
 
+## Results At A Glance
+
+### Regression headline
+
+- Best overall regression model: `A_base_macro + linear`
+- Best overall RMSE: `0.024193`
+- Best `C_full` RMSE: `0.024369`
+- Best matching simpler non-linear benchmark: `A_base_macro + random_forest` with RMSE `0.024648`
+- Interpretation: Polymarket features improved some matched comparisons, but they did not produce the single best overall continuous volatility forecast.
+
+![Model comparison RMSE](research_outputs/plots/model_comparison_rmse.png)
+![Predicted vs actual volatility](research_outputs/plots/predicted_vs_actual_volatility.png)
+![Regression SHAP summary](research_outputs/plots/shap_summary.png)
+
+### Spike-classification headline
+
+- Main label used for summary: `spike_top10`
+- Best overall spike model: `A_base_macro + logistic`
+- Best overall F1: `0.655090`
+- Best `C_full` F1: `0.642701`
+- Bootstrap significance for broad `C_full` improvement: `NO`
+- McNemar significance for broad `C_full` improvement: `NO`
+- Interpretation: Polymarket helps in some local settings, but not as a robust overall improvement in rare-event spike detection.
+
+![Spike improvement heatmaps](research_outputs/plots/spike_improvement_heatmaps.png)
+![Spike bootstrap forest](research_outputs/plots/spike_bootstrap_forest.png)
+![Spike regime F1 bars](research_outputs/plots/spike_regime_f1_bars.png)
+
+### SHAP takeaways
+
+- Top regression Polymarket SHAP features:
+  - `poly_probability_change_lag_1`
+  - `poly_probability_level_lag_1`
+  - `poly_order_imbalance_lag_1`
+- Top spike-model Polymarket SHAP features:
+  - `poly_volume_zscore_lag_1`
+  - `poly_trade_count_lag_1`
+  - `poly_order_imbalance_lag_1`
+- Interpretation: Polymarket variables are informative, but their contribution is mostly conditional and not strong enough to dominate benchmark variables across the full sample.
+
+![Spike SHAP summary](research_outputs/plots/spike_shap_summary.png)
+![Polymarket-only spike SHAP importance](research_outputs/plots/spike_shap_poly_only.png)
+![Spike SHAP dependence](research_outputs/plots/spike_shap_dependence.png)
+
+## Selected Plot Gallery
+
+- [event_study.png](research_outputs/plots/event_study.png)
+- [regime_comparison.png](research_outputs/plots/regime_comparison.png)
+- [rmse_by_model_and_regime.png](research_outputs/plots/rmse_by_model_and_regime.png)
+- [shap_dependence_polymarket_probability.png](research_outputs/plots/shap_dependence_polymarket_probability.png)
+- [spike_event_study.png](research_outputs/plots/spike_event_study.png)
+- [spike_model_rankings.png](research_outputs/plots/spike_model_rankings.png)
+- [spike_predicted_vs_actual.png](research_outputs/plots/spike_predicted_vs_actual.png)
+- [spike_regime_comparison.png](research_outputs/plots/spike_regime_comparison.png)
+- [spike_shap_top15.png](research_outputs/plots/spike_shap_top15.png)
+
 ## Current Empirical Takeaway
 
 ### Regression
-Polymarket features were informative but did not produce the single best overall continuous volatility forecast in the saved run.
+Polymarket features were informative and improved some matched benchmark comparisons, but they did not produce the single best overall continuous volatility forecast in the saved run.
 
 ### Spike detection
 Polymarket features did not produce a broad, statistically robust overall improvement in spike prediction, although they appear more useful in higher-volatility or event-driven settings.
