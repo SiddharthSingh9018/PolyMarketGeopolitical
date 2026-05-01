@@ -1,0 +1,225 @@
+{
+  "context": {
+    "asset": "LMT",
+    "as_of_date": "2020-06-15",
+    "snapshot": {
+      "date": "2020-06-15",
+      "log_return": -0.022751417065145392,
+      "realized_volatility": 0.026194340246123618,
+      "volume_change": 0.27023097142218,
+      "range_pct": 0.025717976143671453,
+      "close_to_open": 0.0,
+      "poly_probability_level": null,
+      "poly_probability_change": 0.0,
+      "poly_probability_volatility": 0.0,
+      "poly_order_imbalance": 0.0,
+      "poly_trade_count": 0.0,
+      "poly_volume_zscore": 0.0,
+      "poly_daily_volume": 0.0,
+      "poly_market_count": 0.0,
+      "regime": "unclassified",
+      "vix": 34.400001525878906,
+      "oil_volatility_proxy": 68.11000061035156,
+      "wti_price": 37.119998931884766,
+      "gpr": 102.8747787475586,
+      "sentiment": 0.02070113653112934,
+      "sentiment_change": -0.015503625687215677,
+      "sentiment_rolling_mean": -0.008482558724960352
+    },
+    "derived_flags": {
+      "poly_jump": false,
+      "poly_extreme": true,
+      "poly_volume_spike": false,
+      "high_vix": true,
+      "elevated_gpr": false,
+      "sentiment_reversal": false,
+      "event_driven_setup": true
+    },
+    "recent_rows": [
+      {
+        "date": "2020-06-04",
+        "log_return": 0.002579582670389944,
+        "realized_volatility": 0.016982074268020245,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 25.809999465942383,
+        "gpr": 36.153533935546875,
+        "sentiment": -0.003461279696286248
+      },
+      {
+        "date": "2020-06-05",
+        "log_return": 0.017387173549560486,
+        "realized_volatility": 0.016545834567010677,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 24.520000457763672,
+        "gpr": 109.97901153564453,
+        "sentiment": -0.0031616928412952078
+      },
+      {
+        "date": "2020-06-08",
+        "log_return": 0.008605574648059186,
+        "realized_volatility": 0.01697698048218883,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 25.809999465942383,
+        "gpr": 65.64539337158203,
+        "sentiment": -0.030013749665673453
+      },
+      {
+        "date": "2020-06-09",
+        "log_return": -0.013951450741904943,
+        "realized_volatility": 0.018063250349097545,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 27.56999969482422,
+        "gpr": 68.30036163330078,
+        "sentiment": -0.007124066355093628
+      },
+      {
+        "date": "2020-06-10",
+        "log_return": -0.011793631358515131,
+        "realized_volatility": 0.01197294186274687,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 27.56999969482422,
+        "gpr": 95.68627166748047,
+        "sentiment": 0.010024361928830723
+      },
+      {
+        "date": "2020-06-11",
+        "log_return": -0.05051532293661156,
+        "realized_volatility": 0.025541731691020326,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 40.790000915527344,
+        "gpr": 87.41497802734375,
+        "sentiment": -0.10221898794801283
+      },
+      {
+        "date": "2020-06-12",
+        "log_return": -0.005249738694617389,
+        "realized_volatility": 0.024442365847845364,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 36.09000015258789,
+        "gpr": 73.61261749267578,
+        "sentiment": 0.03620476221834502
+      },
+      {
+        "date": "2020-06-15",
+        "log_return": -0.022751417065145392,
+        "realized_volatility": 0.026194340246123618,
+        "poly_probability_level": null,
+        "poly_probability_change": 0.0,
+        "poly_volume_zscore": 0.0,
+        "regime": "unclassified",
+        "vix": 34.400001525878906,
+        "gpr": 102.8747787475586,
+        "sentiment": 0.02070113653112934
+      }
+    ],
+    "source_note_included": false
+  },
+  "notes": [
+    {
+      "role": "polymarket_analyst",
+      "thesis": "Event-driven setup with elevated volatility and sentiment reversal potential",
+      "signal_strength": "high",
+      "confidence": 0.8,
+      "key_points": [
+        "High VIX (34.4) and oil volatility proxy (68.11) indicate elevated market volatility",
+        "Sentiment reversal from negative to positive (0.0207) suggests potential for event-driven moves",
+        "Poly_volume_zscore is 0.0, indicating no volume anomalies",
+        "Poly_order_imbalance is 0.0, indicating no order imbalance"
+      ],
+      "risk_flags": [
+        "High VIX and oil volatility proxy indicate elevated market risk",
+        "Sentiment reversal potential may lead to event-driven moves, increasing risk"
+      ],
+      "watch_items": [
+        "Monitor VIX and oil volatility proxy for signs of decreasing volatility",
+        "Watch for sentiment reversal confirmation or reversal in sentiment trend"
+      ]
+    },
+    {
+      "role": "macro_analyst",
+      "thesis": "Geopolitical stress is elevated due to high VIX and oil-volatility proxy levels, with a potential sentiment reversal.",
+      "signal_strength": "high",
+      "confidence": 0.8,
+      "key_points": [
+        "VIX is at 34.4, indicating high market volatility.",
+        "Oil-volatility proxy is at 68.11, suggesting elevated oil price uncertainty.",
+        "WTI price is at 37.12, which is relatively stable.",
+        "GPR is at 102.87, indicating a high level of geopolitical risk.",
+        "Sentiment is at 0.0207, with a recent reversal from negative to positive."
+      ],
+      "risk_flags": [
+        "high_vix",
+        "elevated_gpr",
+        "event_driven_setup"
+      ],
+      "watch_items": [
+        "WTI price movement",
+        "Oil-volatility proxy levels",
+        "GPR movement",
+        "Sentiment reversal"
+      ]
+    },
+    {
+      "role": "bull_researcher",
+      "thesis": "The recent sentiment reversal from negative to positive (0.0207) suggests potential for event-driven moves, while high VIX (34.4) and oil volatility proxy (68.11) indicate elevated market volatility. This setup may lead to a short-term bounce in LMT, driven by investors seeking safety in defensive stocks. However, the elevated geopolitical risk (GPR 102.87) and high VIX levels suggest that this bounce may be short-lived and potentially followed by a decline in the stock price.",
+      "signal_strength": "medium",
+      "confidence": 0.5,
+      "key_points": [],
+      "risk_flags": [],
+      "watch_items": []
+    },
+    {
+      "role": "bear_researcher",
+      "thesis": "The high VIX (34.4) and oil volatility proxy (68.11) levels indicate elevated market volatility and risk, which may lead to a decline in LMT. Additionally, the recent sentiment reversal from negative to positive (0.0207) may be a false signal, and the stock price may continue to decline as investors remain cautious due to the elevated geopolitical risk (GPR 102.87).",
+      "signal_strength": "medium",
+      "confidence": 0.5,
+      "key_points": [],
+      "risk_flags": [],
+      "watch_items": []
+    }
+  ],
+  "verdict": {
+    "asset": "LMT",
+    "as_of_date": "2020-06-15",
+    "stance": "neutral",
+    "horizon": "short-term",
+    "conviction": 0.6,
+    "summary": "Elevated market volatility and geopolitical risk suggest a cautious approach to LMT, with a short-term neutral stance.",
+    "supporting_points": [
+      "High VIX (34.4) and oil volatility proxy (68.11) levels indicate elevated market volatility and risk.",
+      "Elevated geopolitical risk (GPR 102.87) suggests a cautious approach to LMT.",
+      "Recent sentiment reversal from negative to positive (0.0207) may be a false signal."
+    ],
+    "invalidation_triggers": [
+      "VIX levels decrease below 25.",
+      "GPR levels decrease below 80.",
+      "Sentiment reversal confirmation or reversal in sentiment trend."
+    ],
+    "follow_up_tests": [
+      "Monitor VIX and oil volatility proxy for signs of decreasing volatility.",
+      "Watch for sentiment reversal confirmation or reversal in sentiment trend.",
+      "Monitor WTI price movement and oil-volatility proxy levels for signs of stability."
+    ]
+  }
+}

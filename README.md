@@ -152,6 +152,32 @@ This runs:
 uv run python generate_extra_plots.py
 ```
 
+## 4. Geopolitical agents prototype
+
+```bash
+uv run python run_geopolitical_agents.py --asset LMT --date 2020-06-15
+```
+
+This is a research-only Tauric-inspired roundtable that uses your existing Polymarket panel as context and supports only:
+
+- Groq via OpenAI-compatible chat
+- local OpenAI-compatible model endpoints
+
+It does not place trades. It generates:
+
+- a `polymarket_analyst` memo
+- a `macro_analyst` memo
+- a quota-friendly roundtable synthesis containing:
+  - a `bull_researcher` case
+  - a `bear_researcher` case
+  - a final `research_manager`-style verdict
+
+Optional source-note injection:
+
+```bash
+uv run python run_geopolitical_agents.py --asset RTX --date 2020-06-15 --source-note "C:/path/to/source.md"
+```
+
 ## Paper-Style Profile
 
 The code now includes a paper-style configuration helper:
@@ -279,6 +305,7 @@ Inference:
 - [research_outputs/text/paper_vs_pipeline_comparison.md](research_outputs/text/paper_vs_pipeline_comparison.md)
 - [research_outputs/text/final_summary.txt](research_outputs/text/final_summary.txt)
 - [research_outputs/text/spike_final_summary.txt](research_outputs/text/spike_final_summary.txt)
+- [research_outputs/text/geopolitical_agents_prototype.md](research_outputs/text/geopolitical_agents_prototype.md)
 
 ### Main tables
 
@@ -293,6 +320,11 @@ Inference:
 ### Plots
 
 - [research_outputs/plots](research_outputs/plots)
+
+### Geopolitical roundtable artifacts
+
+- `research_outputs/geopolitical_agents/*.json`
+- `research_outputs/geopolitical_agents/*.md`
 
 Useful plot files include:
 
