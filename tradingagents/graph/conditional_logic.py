@@ -19,6 +19,10 @@ class ConditionalLogic:
             return "tools_market"
         return "Msg Clear Market"
 
+    def should_continue_polymarket(self, state: AgentState):
+        """Polymarket analysis is single-pass because it uses prebuilt panel context."""
+        return "Msg Clear Polymarket"
+
     def should_continue_social(self, state: AgentState):
         """Determine if social media analysis should continue."""
         messages = state["messages"]

@@ -52,6 +52,7 @@ class MessageBuffer:
 
     # Analyst name mapping
     ANALYST_MAPPING = {
+        "polymarket": "Polymarket Analyst",
         "market": "Market Analyst",
         "social": "Social Analyst",
         "news": "News Analyst",
@@ -62,6 +63,7 @@ class MessageBuffer:
     # analyst_key: which analyst selection controls this section (None = always included)
     # finalizing_agent: which agent must be "completed" for this report to count as done
     REPORT_SECTIONS = {
+        "polymarket_report": ("polymarket", "Polymarket Analyst"),
         "market_report": ("market", "Market Analyst"),
         "sentiment_report": ("social", "Social Analyst"),
         "news_report": ("news", "News Analyst"),
@@ -170,6 +172,7 @@ class MessageBuffer:
         if latest_section and latest_content:
             # Format the current section for display
             section_titles = {
+                "polymarket_report": "Polymarket Analysis",
                 "market_report": "Market Analysis",
                 "sentiment_report": "Social Sentiment",
                 "news_report": "News Analysis",
@@ -189,9 +192,13 @@ class MessageBuffer:
         report_parts = []
 
         # Analyst Team Reports - use .get() to handle missing sections
-        analyst_sections = ["market_report", "sentiment_report", "news_report", "fundamentals_report"]
+        analyst_sections = ["polymarket_report", "market_report", "sentiment_report", "news_report", "fundamentals_report"]
         if any(self.report_sections.get(section) for section in analyst_sections):
             report_parts.append("## Analyst Team Reports")
+            if self.report_sections.get("polymarket_report"):
+                report_parts.append(
+                    f"### Polymarket Analysis\n{self.report_sections['polymarket_report']}"
+                )
             if self.report_sections.get("market_report"):
                 report_parts.append(
                     f"### Market Analysis\n{self.report_sections['market_report']}"
@@ -283,6 +290,7 @@ def update_display(layout, spinner_text=None, stats_handler=None, start_time=Non
     # Group agents by team - filter to only include agents in agent_status
     all_teams = {
         "Analyst Team": [
+            "Polymarket Analyst",
             "Market Analyst",
             "Social Analyst",
             "News Analyst",
@@ -644,6 +652,10 @@ def save_report_to_disk(final_state, ticker: str, save_path: Path):
     # 1. Analysts
     analysts_dir = save_path / "1_analysts"
     analyst_parts = []
+    if final_state.get("polymarket_report"):
+        analysts_dir.mkdir(exist_ok=True)
+        (analysts_dir / "polymarket.md").write_text(final_state["polymarket_report"], encoding="utf-8")
+        analyst_parts.append(("Polymarket Analyst", final_state["polymarket_report"]))
     if final_state.get("market_report"):
         analysts_dir.mkdir(exist_ok=True)
         (analysts_dir / "market.md").write_text(final_state["market_report"], encoding="utf-8")
@@ -733,6 +745,8 @@ def display_complete_report(final_state):
 
     # I. Analyst Team Reports
     analysts = []
+    if final_state.get("polymarket_report"):
+        analysts.append(("Polymarket Analyst", final_state["polymarket_report"]))
     if final_state.get("market_report"):
         analysts.append(("Market Analyst", final_state["market_report"]))
     if final_state.get("sentiment_report"):
@@ -795,14 +809,16 @@ def update_research_team_status(status):
 
 
 # Ordered list of analysts for status transitions
-ANALYST_ORDER = ["market", "social", "news", "fundamentals"]
+ANALYST_ORDER = ["polymarket", "market", "social", "news", "fundamentals"]
 ANALYST_AGENT_NAMES = {
+    "polymarket": "Polymarket Analyst",
     "market": "Market Analyst",
     "social": "Social Analyst",
     "news": "News Analyst",
     "fundamentals": "Fundamentals Analyst",
 }
 ANALYST_REPORT_MAP = {
+    "polymarket": "polymarket_report",
     "market": "market_report",
     "social": "sentiment_report",
     "news": "news_report",
@@ -1033,7 +1049,7 @@ def run_analysis(checkpoint: bool = False):
         update_display(layout, stats_handler=stats_handler, start_time=start_time)
 
         # Update agent status to in_progress for the first analyst
-        first_analyst = f"{selections['analysts'][0].value.capitalize()} Analyst"
+        first_analyst = ANALYST_AGENT_NAMES[selected_analyst_keys[0]]
         message_buffer.update_agent_status(first_analyst, "in_progress")
         update_display(layout, stats_handler=stats_handler, start_time=start_time)
 

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class AnalystType(str, Enum):
+    POLYMARKET = "polymarket"
     MARKET = "market"
     SOCIAL = "social"
     NEWS = "news"

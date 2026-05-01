@@ -9,6 +9,30 @@ ProviderModeOptions = Dict[str, Dict[str, List[ModelOption]]]
 
 
 MODEL_OPTIONS: ProviderModeOptions = {
+    "groq": {
+        "quick": [
+            ("Llama 3.1 8B Instant - Fast Groq inference", "llama-3.1-8b-instant"),
+            ("GPT-OSS 20B - Groq OpenAI-compatible", "openai/gpt-oss-20b"),
+            ("Qwen3 32B - Stronger reasoning", "qwen/qwen3-32b"),
+        ],
+        "deep": [
+            ("GPT-OSS 20B - Groq OpenAI-compatible", "openai/gpt-oss-20b"),
+            ("Qwen3 32B - Stronger reasoning", "qwen/qwen3-32b"),
+            ("Llama 3.3 70B Versatile", "llama-3.3-70b-versatile"),
+        ],
+    },
+    "local_openai": {
+        "quick": [
+            ("Local endpoint model (enter exact ID)", "custom"),
+            ("Llama 3.1 8B Instant via local proxy", "llama-3.1-8b-instant"),
+            ("GPT-OSS 20B via local proxy", "openai/gpt-oss-20b"),
+        ],
+        "deep": [
+            ("Local endpoint model (enter exact ID)", "custom"),
+            ("GPT-OSS 20B via local proxy", "openai/gpt-oss-20b"),
+            ("Qwen3 32B via local proxy", "qwen/qwen3-32b"),
+        ],
+    },
     "openai": {
         "quick": [
             ("GPT-5.4 Mini - Fast, strong coding and tool use", "gpt-5.4-mini"),

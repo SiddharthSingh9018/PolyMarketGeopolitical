@@ -11,6 +11,7 @@ console = Console()
 TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
 
 ANALYST_ORDER = [
+    ("Polymarket Analyst", AnalystType.POLYMARKET),
     ("Market Analyst", AnalystType.MARKET),
     ("Social Media Analyst", AnalystType.SOCIAL),
     ("News Analyst", AnalystType.NEWS),
@@ -232,6 +233,8 @@ def select_llm_provider() -> tuple[str, str | None]:
     """Select the LLM provider and its API endpoint."""
     # (display_name, provider_key, base_url)
     PROVIDERS = [
+        ("Groq", "groq", "https://api.groq.com/openai/v1"),
+        ("Local OpenAI-Compatible", "local_openai", "http://127.0.0.1:8765/v1"),
         ("OpenAI", "openai", "https://api.openai.com/v1"),
         ("Google", "google", None),
         ("Anthropic", "anthropic", "https://api.anthropic.com/"),

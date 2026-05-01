@@ -42,12 +42,14 @@ _PASSTHROUGH_KWARGS = (
 
 # Provider base URLs and API key env vars
 _PROVIDER_CONFIG = {
+    "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY"),
     "xai": ("https://api.x.ai/v1", "XAI_API_KEY"),
     "deepseek": ("https://api.deepseek.com", "DEEPSEEK_API_KEY"),
     "qwen": ("https://dashscope-intl.aliyuncs.com/compatible-mode/v1", "DASHSCOPE_API_KEY"),
     "glm": ("https://api.z.ai/api/paas/v4/", "ZHIPU_API_KEY"),
     "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY"),
     "ollama": ("http://localhost:11434/v1", None),
+    "local_openai": ("http://127.0.0.1:8765/v1", "LOCAL_LLM_API_KEY"),
 }
 
 
@@ -83,6 +85,8 @@ class OpenAIClient(BaseLLMClient):
                 api_key = os.environ.get(api_key_env)
                 if api_key:
                     llm_kwargs["api_key"] = api_key
+                elif self.provider == "local_openai":
+                    llm_kwargs["api_key"] = "local"
             else:
                 llm_kwargs["api_key"] = "ollama"
         elif self.base_url:

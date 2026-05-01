@@ -67,6 +67,7 @@ TradingAgents is a multi-agent trading framework that mirrors the dynamics of re
 Our framework decomposes complex trading tasks into specialized roles. This ensures the system achieves a robust, scalable approach to market analysis and decision-making.
 
 ### Analyst Team
+- Polymarket Analyst: Reads a prebuilt Polymarket/geopolitical panel and explains whether prediction-market activity adds incremental short-horizon signal for the ticker.
 - Fundamentals Analyst: Evaluates company financials and performance metrics, identifying intrinsic values and potential red flags.
 - Sentiment Analyst: Analyzes social media and public sentiment using sentiment scoring algorithms to gauge short-term market mood.
 - News Analyst: Monitors global news and macroeconomic indicators, interpreting the impact of events on market conditions.
@@ -146,11 +147,19 @@ export DASHSCOPE_API_KEY=...       # Qwen (Alibaba DashScope)
 export ZHIPU_API_KEY=...           # GLM (Zhipu)
 export OPENROUTER_API_KEY=...      # OpenRouter
 export ALPHA_VANTAGE_API_KEY=...   # Alpha Vantage
+export GROQ_API_KEY=...            # Groq (OpenAI-compatible)
 ```
 
 For enterprise providers (e.g. Azure OpenAI, AWS Bedrock), copy `.env.enterprise.example` to `.env.enterprise` and fill in your credentials.
 
 For local models, configure Ollama with `llm_provider: "ollama"` in your config.
+
+For OpenAI-compatible local proxies, use the new `Local OpenAI-Compatible` provider in the CLI and point it at your endpoint. This is useful when routing to:
+
+- a local LLM proxy
+- LM Studio
+- vLLM
+- an OpenAI-compatible bridge that mixes local embeddings with remote chat
 
 Alternatively, copy `.env.example` to `.env` and fill in your keys:
 ```bash
@@ -165,6 +174,32 @@ tradingagents          # installed command
 python -m cli.main     # alternative: run directly from source
 ```
 You will see a screen where you can select your desired tickers, analysis date, LLM provider, research depth, and more.
+
+## Polymarket Research Add-on
+
+This branch adds a `Polymarket Analyst` to the terminal workflow.
+
+What it does:
+
+- reads a prebuilt Polymarket/geopolitical research panel
+- surfaces a dedicated Polymarket report in the same analyst UI
+- writes `polymarket.md` into the analyst report folder
+
+Default dataset path:
+
+- `C:/Users/sidme/OneDrive/Desktop/Obsidian/ZettelKastan/ZettelKasten/poly_data/research_data/processed/model_dataset.csv`
+
+Override it with:
+
+```bash
+export POLYMARKET_DATASET_PATH=/path/to/model_dataset.csv
+```
+
+Recommended provider choices on this branch:
+
+- `Ollama` for fully local chat if you have local models available
+- `Local OpenAI-Compatible` for a local proxy or bridge
+- `Groq` as fallback when a local chat model is not available
 
 <p align="center">
   <img src="assets/cli/cli_init.png" width="100%" style="display: inline-block; margin: 0 2%;">
